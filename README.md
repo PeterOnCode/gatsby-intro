@@ -65,6 +65,32 @@ Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cl
 - [GitHub Gatsby Intro][github-course-errata]
 - [Course Slides][slides]
 
+## Lesson 2. - Website Setup
+
+### Blog Setup ( - 03:52)
+
+```shell
+npm i
+npm run develop
+```
+
+### Creating a New Page (03:53 - 05:37)
+
+```shell
+touch src/pages/about.js
+```
+
+> <a id="code-02-01">_**Listing 2.1** `src/pages/about.js`_</a>
+
+```jsx
+export default () => (
+  <>
+    <h1>About Me</h1>
+    <p>This is my personal website.</p>
+  </>
+);
+```
+
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
