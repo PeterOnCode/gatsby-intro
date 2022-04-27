@@ -1,4 +1,11 @@
-import * as React from "react"
+import * as React from 'react'
+import { Link } from 'gatsby'
 
-
-export default () => <div>Hi Frontend Masters!</div>
+const Index = () => (
+  <>
+    <h1>Home</h1>
+    <p>Hello Budapest!</p>
+    <Link to="/about/">Learn about Me</Link>
+  </>
+)
+export default Index

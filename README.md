@@ -65,16 +65,16 @@ Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cl
 - [GitHub Gatsby Intro][github-course-errata]
 - [Course Slides][slides]
 
-## Lesson 2. - Website Setup
+## Lesson 2 - Website Setup
 
-### Blog Setup ( - 03:52)
+### 2.1 - Blog Setup ( - 03:52)
 
 ```shell
 npm i
 npm run develop
 ```
 
-### Creating a New Page (03:53 - 05:37)
+### 2.2 - Creating a New Page (03:53 - 05:37)
 
 ```shell
 touch src/pages/about.js
@@ -91,6 +91,51 @@ export default () => (
 );
 ```
 
+### 2.3 - Gatsby Link (05:38 - 09:23)
+
+> <a id="code-02-02">_**Listing 2.2** `src/pages/about.js`_</a>
+
+```jsx
+import React from 'react'
+import { Link } from 'gatsby'
+
+const About = () => (
+  <>
+    <h1>About Me</h1>
+    <p>This is my personal website.</p>
+    <Link to="/">&larr; back to home</Link>
+  </>
+)
+
+export default About
+```
+
+> <a id="code-02-03">_**Listing 2.3** `src/pages/index.js`_</a>
+
+```jsx
+import * as React from 'react'
+import { Link } from 'gatsby'
+
+const Index = () => (
+  <>
+    <h1>Home</h1>
+    <p>Hello Budapest!</p>
+    <Link to="/about/">Learn about Me</Link>
+  </>
+)
+export default Index
+
+```
+
+### 2.4 - Code Repo Branches (09:28 - )
+
+
+
+### 2.5 - Adding CSS with Emotion ()
+### 2.6 - Styling the Main Layout ()
+### 2.7 - Creating & Styling the Header ()
+### 2.8 - Gatsby & GraphQL ()
+### 2.9 - Rendering Site Metadata ()
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
