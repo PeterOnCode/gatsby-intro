@@ -127,7 +127,14 @@ export default Index
 
 ```
 
-### 2.4 - Code Repo Branches (09:28 - )
+### 2.4 - Code Repo Branches (09:28 - 10:15)
+
+- [Branch: github.com/FrontendMasters/gatsby-intro/tree/step0/pages-and-links][github-gatsby-intro-branch-step0-pages-and-links]
+
+```shell
+git checkout step0/pages-and-links
+```
+> <a id="code-02-04">_**Listing 2.4** `src/pages/index.js`_</a>
 
 
 
@@ -140,3 +147,4 @@ export default Index
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
 [slides]: https://jlengstorf.github.io/presentations/workshop-gatsby-mdx-blog/#/
+[github-gatsby-intro-branch-step0-pages-and-links]: https://github.com/FrontendMasters/gatsby-intro/tree/step0/pages-and-links
