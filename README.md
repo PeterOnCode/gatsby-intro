@@ -64,6 +64,7 @@ Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cl
 - [Gatsby QuickStart][gatsbyjs.com-quickstart]
 - [GitHub Gatsby Intro][github-course-errata]
 - [Course Slides][slides]
+- [Gatsby The Starter Library][gatsbyjs.com-starter-library]
 
 ## Lesson 2 - Website Setup
 
@@ -134,17 +135,52 @@ export default Index
 ```shell
 git checkout step0/pages-and-links
 ```
-### 2.5 - Adding CSS with Emotion (10:16 - )
+### 2.5 - Adding CSS with Emotion (10:16 - 15:14)
 
 - [@emotion/core][npmjs-emotion-core]
+- [Emotion, a library designed for writing css styles with JavaScript. ][emotion]
+- [Gatsby plugin emotion][github-gatsby-plugin-emotion]
+
+
 ```shell
-npm i @emotion/core @emotion/styled @gatsby-plugin-emotion
+npm i @emotion/core @emotion/styled gatsby-plugin-emotion
+```
+
+- [Gatsby Config API][gatsbyjs.com-config-api]
+
+```shell
+touch gatsby-config.js
+```
+> <a id="code-02-04">_**Listing 2.4** `src/gatsby-config.js`_</a>
+
+```js
+module.exports = {
+  siteMetadata: {
+    title: `Gatsby Intro`
+  },
+  plugins: ['gatsby-plugin-emotion'],
+}
+```
+
+```shell
+touch src/components/layout.js
+```
+
+> <a id="code-02-05">_**Listing 2.5** `src/components/layout.js`_</a>
+
+```jsx
+import React from 'react'
+import { Global, css } from '@emotion/core'
+
+const Layout = ({ children }) => (
+  <>
+    <Global styles={css``} />
+  </>
+)
 
 ```
 
-> <a id="code-02-04">_**Listing 2.4** `src/pages/index.js`_</a>
-
-### 2.6 - Styling the Main Layout ()
+### 2.6 - Styling the Main Layout (15:15 - )
 ### 2.7 - Creating & Styling the Header ()
 ### 2.8 - Gatsby & GraphQL ()
 ### 2.9 - Rendering Site Metadata ()
@@ -152,5 +188,9 @@ npm i @emotion/core @emotion/styled @gatsby-plugin-emotion
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
 [slides]: https://jlengstorf.github.io/presentations/workshop-gatsby-mdx-blog/#/
+[gatsbyjs.com-starter-library]: https://www.gatsbyjs.com/docs/how-to/local-development/starters/ ""
+[gatsbyjs.com-config-api]:https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
 [github-gatsby-intro-branch-step0-pages-and-links]: https://github.com/FrontendMasters/gatsby-intro/tree/step0/pages-and-links
+[github-gatsby-plugin-emotion]: https://www.npmjs.com/package/gatsby-plugin-emotion
 [npmjs-emotion-core]: https://www.npmjs.com/package/@emotion/core
+[emotion]: https://emotion.sh/docs/introduction
