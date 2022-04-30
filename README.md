@@ -137,13 +137,13 @@ git checkout step0/pages-and-links
 ```
 ### 2.5 - Adding CSS with Emotion (10:16 - 15:14)
 
-- [@emotion/core][npmjs-emotion-core]
+- [@emotion/react][npmjs-emotion-react]
 - [Emotion, a library designed for writing css styles with JavaScript. ][emotion]
 - [Gatsby plugin emotion][github-gatsby-plugin-emotion]
 
 
 ```shell
-npm i @emotion/core @emotion/styled gatsby-plugin-emotion
+npm i @emotion/react @emotion/styled gatsby-plugin-emotion
 ```
 
 - [Gatsby Config API][gatsbyjs.com-config-api]
@@ -180,8 +180,110 @@ const Layout = ({ children }) => (
 
 ```
 
-### 2.6 - Styling the Main Layout (15:15 - )
-### 2.7 - Creating & Styling the Header ()
+### 2.6 - Styling the Main Layout (15:15 - 25:58)
+
+> <a id="code-02-06">_**Listing 2.6** `src/components/layout.js`_</a>
+
+```jsx
+import React from 'react'
+import { Global, css } from '@emotion/react'
+
+const Layout = ({ children }) => (
+  <>
+    <Global
+      styles={css`
+        * {
+          box-sizing: border-box;
+          margin: 10px;
+        }
+
+        * + * {
+          margin-top: 1rem;
+        }
+
+        html,
+        body {
+          margin: 0;
+          color: #555;
+          font-family: -apple-system, 'Droid Sans Mono Slashed', serif;
+          font-size: 18px;
+          line-height: 1.4;
+        }
+
+        /* remove margin for the main div that Gatsby noubts into */
+        > div {
+          margin-top: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #222;
+          line-height: 1.1;
+
+          + * {
+            margin-top: 0-5rem;
+          }
+        }
+
+        strong {
+          color: #222;
+        }
+
+        li {
+          margin-top: 0.25rem;
+        }
+      `}
+    />
+
+    <header></header>
+    <main css={css``}>{children}</main>
+  </>
+)
+
+export default Layout
+
+```
+
+> <a id="code-02-07">_**Listing 2.7** `src/pages/about.js`_</a>
+
+```jsx
+// .-.-.-
+import Layout from '../components/layout'
+
+const About = () => (
+        <Layout>
+           <h1>About Me</h1>
+           <p>This is my personal website.</p>
+           <Link to="/">&larr; back to home</Link>
+        </Layout>
+)
+// .-.-.-
+```
+
+> <a id="code-02-08">_**Listing 2.8** `src/pages/index.js`_</a>
+
+```jsx
+// .-.-.-
+import Layout from '../components/layout'
+
+const Index = () => (
+        <Layout>
+           <h1>Home</h1>
+           <p>Hello Budapest!</p>
+           <Link to="/about/">Learn about Me</Link>
+        </Layout>
+)
+// .-.-.-
+```
+
+### 2.7 - Creating & Styling the Header (25:59 - )
+
+
+
 ### 2.8 - Gatsby & GraphQL ()
 ### 2.9 - Rendering Site Metadata ()
 
@@ -192,5 +294,5 @@ const Layout = ({ children }) => (
 [gatsbyjs.com-config-api]:https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
 [github-gatsby-intro-branch-step0-pages-and-links]: https://github.com/FrontendMasters/gatsby-intro/tree/step0/pages-and-links
 [github-gatsby-plugin-emotion]: https://www.npmjs.com/package/gatsby-plugin-emotion
-[npmjs-emotion-core]: https://www.npmjs.com/package/@emotion/core
+[npmjs-emotion-react]: https://www.npmjs.com/package/@emotion/react
 [emotion]: https://emotion.sh/docs/introduction
