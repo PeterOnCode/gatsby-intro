@@ -134,11 +134,16 @@ export default Index
 ```shell
 git checkout step0/pages-and-links
 ```
+### 2.5 - Adding CSS with Emotion (10:16 - )
+
+- [@emotion/core][npmjs-emotion-core]
+```shell
+npm i @emotion/core @emotion/styled @gatsby-plugin-emotion
+
+```
+
 > <a id="code-02-04">_**Listing 2.4** `src/pages/index.js`_</a>
 
-
-
-### 2.5 - Adding CSS with Emotion ()
 ### 2.6 - Styling the Main Layout ()
 ### 2.7 - Creating & Styling the Header ()
 ### 2.8 - Gatsby & GraphQL ()
@@ -148,3 +153,4 @@ git checkout step0/pages-and-links
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
 [slides]: https://jlengstorf.github.io/presentations/workshop-gatsby-mdx-blog/#/
 [github-gatsby-intro-branch-step0-pages-and-links]: https://github.com/FrontendMasters/gatsby-intro/tree/step0/pages-and-links
+[npmjs-emotion-core]: https://www.npmjs.com/package/@emotion/core
