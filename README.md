@@ -445,8 +445,114 @@ const NavLink = styled(Link)`
 
 // .-.-.-
 ```
-### 2.8 - Gatsby & GraphQL ()
-### 2.9 - Rendering Site Metadata ()
+### 2.8 - Gatsby & GraphQL (38:23 - 42:58)
+
+> <a id="code-02-14">_**Listing 2.14** `src/gatsby-config.js`_</a>
+
+```js
+module.exports = {
+   siteMetadata: {
+      title: `Frontend Masters Gatsby Workshop Intro`,
+      description: 'A site we built together doing a full-day Frontend MAsters Gatsby workshop!',
+   },
+   plugins: ['gatsby-plugin-emotion'],
+}
+```
+
+> <a id="code-02-15">_**Listing 2.15** <http://localhost:8001/__graphql> _</a>
+
+```graphql
+query siteMetadata {
+  site {
+    siteMetadata {
+      title
+      description
+    }
+  }
+}
+```
+
+### 2.9 - Rendering Site Metadata (42:58 - 51:10)
+
+- [GitHub - gatsby-plugin-react-helmet][github-gatsby-plugin-react-helmet]
+- [GitHub - react-helmet][github-react-helmet]
+
+```shell
+npm i gatsby-plugin-react-helmet react-helmet
+```
+
+> <a id="code-02-16">_**Listing 2.16** `src/gatsby-config.js`_</a>
+
+```js
+//.-.-.-
+  plugins: ['gatsby-plugin-emotion', 'gatsby-plugin-react-helmet'],
+//.-.-.-
+```
+
+> <a id="code-02-17">_**Listing 2.17** `src/components/layout.js`_</a>
+
+```jsx
+//.-.-.-
+import Header from './header'
+//.-.-.-
+<Helmet>
+  <html lang="en" />
+  <title>Hello FEM!</title>
+  <meta name="description" content="sites description" />
+</Helmet>
+//.-.-.-
+
+```
+
+> <a id="code-02-18">_**Listing 2.18** `src/hooks/use-sitemetadata.js`_</a>
+
+```js
+import { graphql, useStaticQuery } from 'gatsby'
+
+const useSiteMetadata = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          description
+        }
+      }
+    }
+  `)
+
+  return data.site.siteMetadata
+}
+
+export default useSiteMetadata
+
+```
+> <a id="code-02-19">_**Listing 2.19** `src/components/layout.js`_</a>
+
+```jsx
+// .-.-.-
+import useSitemetadata from '../hooks/use-sitemetadata'
+// .-.-.-
+const Layout = ({ children }) => {
+   const { title, description } = useSitemetadata()
+   return (
+           <>
+// .-.-.-
+              <Helmet>
+                 <html lang="en" />
+                 <title>{title}</title>
+                 <meta name="description" content={description} />
+              </Helmet>                 
+// .-.-.-              
+          </>
+   ) 
+}
+// .-.-.-
+```
+
+### 2.10 - Rendering Components in MDX (51:11 - )
+
+
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
@@ -457,3 +563,5 @@ const NavLink = styled(Link)`
 [github-gatsby-plugin-emotion]: https://www.npmjs.com/package/gatsby-plugin-emotion
 [npmjs-emotion-react]: https://www.npmjs.com/package/@emotion/react
 [emotion]: https://emotion.sh/docs/introduction
+[github-gatsby-plugin-react-helmet]: https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-helmet#readme
+[github-react-helmet]: https://github.com/nfl/react-helmet#readme
