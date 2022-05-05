@@ -64,8 +64,396 @@ Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cl
 - [Gatsby QuickStart][gatsbyjs.com-quickstart]
 - [GitHub Gatsby Intro][github-course-errata]
 - [Course Slides][slides]
+- [Gatsby The Starter Library][gatsbyjs.com-starter-library]
 
+## Lesson 2 - Website Setup
+
+### 2.1 - Blog Setup ( - 03:52)
+
+```shell
+npm i
+npm run develop
+```
+
+### 2.2 - Creating a New Page (03:53 - 05:37)
+
+```shell
+touch src/pages/about.js
+```
+
+> <a id="code-02-01">_**Listing 2.1** `src/pages/about.js`_</a>
+
+```jsx
+export default () => (
+  <>
+    <h1>About Me</h1>
+    <p>This is my personal website.</p>
+  </>
+);
+```
+
+### 2.3 - Gatsby Link (05:38 - 09:23)
+
+> <a id="code-02-02">_**Listing 2.2** `src/pages/about.js`_</a>
+
+```jsx
+import React from 'react'
+import { Link } from 'gatsby'
+
+const About = () => (
+  <>
+    <h1>About Me</h1>
+    <p>This is my personal website.</p>
+    <Link to="/">&larr; back to home</Link>
+  </>
+)
+
+export default About
+```
+
+> <a id="code-02-03">_**Listing 2.3** `src/pages/index.js`_</a>
+
+```jsx
+import * as React from 'react'
+import { Link } from 'gatsby'
+
+const Index = () => (
+  <>
+    <h1>Home</h1>
+    <p>Hello Budapest!</p>
+    <Link to="/about/">Learn about Me</Link>
+  </>
+)
+export default Index
+
+```
+
+### 2.4 - Code Repo Branches (09:28 - 10:15)
+
+- [Branch: github.com/FrontendMasters/gatsby-intro/tree/step0/pages-and-links][github-gatsby-intro-branch-step0-pages-and-links]
+
+```shell
+git checkout step0/pages-and-links
+```
+### 2.5 - Adding CSS with Emotion (10:16 - 15:14)
+
+- [@emotion/react][npmjs-emotion-react]
+- [Emotion, a library designed for writing css styles with JavaScript. ][emotion]
+- [Gatsby plugin emotion][github-gatsby-plugin-emotion]
+
+
+```shell
+npm i @emotion/react @emotion/styled gatsby-plugin-emotion
+```
+
+- [Gatsby Config API][gatsbyjs.com-config-api]
+
+```shell
+touch gatsby-config.js
+```
+> <a id="code-02-04">_**Listing 2.4** `src/gatsby-config.js`_</a>
+
+```js
+module.exports = {
+  siteMetadata: {
+    title: `Gatsby Intro`
+  },
+  plugins: ['gatsby-plugin-emotion'],
+}
+```
+
+```shell
+touch src/components/layout.js
+```
+
+> <a id="code-02-05">_**Listing 2.5** `src/components/layout.js`_</a>
+
+```jsx
+import React from 'react'
+import { Global, css } from '@emotion/core'
+
+const Layout = ({ children }) => (
+  <>
+    <Global styles={css``} />
+  </>
+)
+
+```
+
+### 2.6 - Styling the Main Layout (15:15 - 25:58)
+
+> <a id="code-02-06">_**Listing 2.6** `src/components/layout.js`_</a>
+
+```jsx
+import React from 'react'
+import { Global, css } from '@emotion/react'
+
+const Layout = ({ children }) => (
+  <>
+    <Global
+      styles={css`
+        * {
+          box-sizing: border-box;
+          margin: 10px;
+        }
+
+        * + * {
+          margin-top: 1rem;
+        }
+
+        html,
+        body {
+          margin: 0;
+          color: #555;
+          font-family: -apple-system, 'Droid Sans Mono Slashed', serif;
+          font-size: 18px;
+          line-height: 1.4;
+        }
+
+        /* remove margin for the main div that Gatsby noubts into */
+        > div {
+          margin-top: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #222;
+          line-height: 1.1;
+
+          + * {
+            margin-top: 0-5rem;
+          }
+        }
+
+        strong {
+          color: #222;
+        }
+
+        li {
+          margin-top: 0.25rem;
+        }
+      `}
+    />
+
+    <header></header>
+    <main css={css``}>{children}</main>
+  </>
+)
+
+export default Layout
+
+```
+
+> <a id="code-02-07">_**Listing 2.7** `src/pages/about.js`_</a>
+
+```jsx
+// .-.-.-
+import Layout from '../components/layout'
+
+const About = () => (
+        <Layout>
+           <h1>About Me</h1>
+           <p>This is my personal website.</p>
+           <Link to="/">&larr; back to home</Link>
+        </Layout>
+)
+// .-.-.-
+```
+
+> <a id="code-02-08">_**Listing 2.8** `src/pages/index.js`_</a>
+
+```jsx
+// .-.-.-
+import Layout from '../components/layout'
+
+const Index = () => (
+        <Layout>
+           <h1>Home</h1>
+           <p>Hello Budapest!</p>
+           <Link to="/about/">Learn about Me</Link>
+        </Layout>
+)
+// .-.-.-
+```
+
+### 2.7 - Creating & Styling the Header (25:59 - 38:15)
+
+> <a id="code-02-09">_**Listing 2.9** `src/components/header.js`_</a>
+
+```jsx
+import React from 'react'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
+import { Link } from 'gatsby'
+
+const NavLink = styled(Link)`
+  color: #222;
+  font-size: 1rem;
+  font-weight: normal;
+  line-height: 1;
+  margin: 0 0.5rem 0 0;
+  padding: 0.25rem;
+  text-decoration: none;
+`
+const Header = () => (
+        <header
+                css={css`
+      background: #eee;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+    `}
+        >
+           <NavLink to="/">FEM Workshop</NavLink>
+           <nav
+                   css={css`
+        margin-top: 0;
+      `}
+           >
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/about/">About</NavLink>
+           </nav>
+           {/* site name */}
+           {/* navigation */}
+        </header>
+)
+
+export default Header
+
+```
+
+> <a id="code-02-10">_**Listing 2.10** `src/components/layout.js`_</a>
+
+```jsx
+// .-.-.-
+const Layout = ({ children }) => (
+        <>
+           <Global
+                   styles={css`
+        * {
+          box-sizing: border-box;
+          margin: 10px;
+        }
+
+        * + * {
+          margin-top: 1rem;
+        }
+
+        html,
+        body {
+          margin: 0;
+          color: #555;
+          font-family: -apple-system, 'Droid Sans Mono Slashed', serif;
+          font-size: 18px;
+          line-height: 1.4;
+        }
+
+        /* remove margin for the main div that Gatsby noubts into */
+        > div {
+          margin-top: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #222;
+          line-height: 1.1;
+
+          + * {
+            margin-top: 0-5rem;
+          }
+        }
+
+        strong {
+          color: #222;
+        }
+
+        li {
+          margin-top: 0.25rem;
+        }
+      `}
+           />
+
+           <Header />
+           <main
+                   css={css`
+        margin: 2rem auto 4rem;
+        max-width: 90vw;
+        width: 550px;
+      `}
+           >
+              {children}
+           </main>
+        </>
+)
+// .-.-.-
+```
+
+
+> <a id="code-02-11">_**Listing 2.11** `src/components/layout.js`_</a>
+
+```jsx
+// .-.-.-
+<header
+        css={css`
+      background: #eee;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem calc((100vw - 550px) / 2);
+    `}
+>
+// .-.-.-
+```
+
+> <a id="code-02-12">_**Listing 2.12** `src/components/header.js`_</a>
+
+```jsx
+// .-.-.-
+const NavLink = styled(Link)`
+// .-.-.-
+
+  &.current-page {
+    border-bottom: 2px solid #222;
+  }
+`
+// .-.-.-
+<NavLink to="/" activeClassName="current-page">Home</NavLink>
+<NavLink to="/about/" activeClassName="current-page">About</NavLink>
+// .-.-.-
+```
+
+> <a id="code-02-13">_**Listing 2.13** `src/components/header.js`_</a>
+
+```jsx
+// .-.-.-
+const NavLink = styled(Link)`
+// .-.-.-
+  font-weight: ${(props) => props.fontWeight || 'normal'};
+// .-.-.-
+`
+// .-.-.-
+<NavLink to="/" fontWeight="bold">
+        FEM Workshop
+</NavLink>
+
+// .-.-.-
+```
+### 2.8 - Gatsby & GraphQL ()
+### 2.9 - Rendering Site Metadata ()
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
 [slides]: https://jlengstorf.github.io/presentations/workshop-gatsby-mdx-blog/#/
+[gatsbyjs.com-starter-library]: https://www.gatsbyjs.com/docs/how-to/local-development/starters/ ""
+[gatsbyjs.com-config-api]:https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
+[github-gatsby-intro-branch-step0-pages-and-links]: https://github.com/FrontendMasters/gatsby-intro/tree/step0/pages-and-links
+[github-gatsby-plugin-emotion]: https://www.npmjs.com/package/gatsby-plugin-emotion
+[npmjs-emotion-react]: https://www.npmjs.com/package/@emotion/react
+[emotion]: https://emotion.sh/docs/introduction

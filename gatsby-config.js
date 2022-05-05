@@ -3,5 +3,5 @@ module.exports = {
     title: `Gatsby Intro`,
     siteUrl: `https://www.yourdomain.tld`,
   },
-  plugins: [],
+  plugins: ['gatsby-plugin-emotion'],
 }
