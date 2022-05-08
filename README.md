@@ -550,8 +550,99 @@ const Layout = ({ children }) => {
 // .-.-.-
 ```
 
-### 2.10 - Rendering Components in MDX (51:11 - )
+### 3.1 - Rendering Components in MDX (00:00 - 11:22)
 
+- [gatsby-source-filesystem][github-gatsby-source-filesystem]
+- [gatsby-plugin-mdx][github-gatsby-plugin-mdx]
+- @mdx-js/mdx 
+- @mdx-js/react
+
+```shell
+npm install gatsby-source-filesystem gatsby-plugin-mdx @mdx-js/mdx@v1 @mdx-js/react@v1
+```
+
+> <a id="code-03-01">_**Listing 3.01** `src/gatsby-config.js`_</a>
+
+```js
+module.exports = {
+   //.-.-.-
+   plugins: [
+      'gatsby-plugin-emotion',
+      'gatsby-plugin-react-helmet',
+      {
+         resolve: `gatsby-plugin-mdx`,
+         options: {
+            defaultLayouts: {
+               default: require.resolve('./src/components/layout.js'),
+            },
+         },
+      }
+   ],
+   //.-.-.-
+}
+```
+
+> <a id="code-03-02">_**Listing 3.02** `src/pages/contact.mdx`_</a>
+
+```mdx
+# Contact Me
+
+You can get in touch with me by opening the nearest window and yelling out of i real loud.
+```
+
+- <localhost:8000/contact>
+
+> <a id="code-03-03">_**Listing 3.03** `src/compnents/wave.js`_</a>
+
+```jsx
+import React, { useState } from 'react'
+import { css } from '@emotion/react'
+
+const Wave = () => {
+  const [waves, setWaves] = useState(0)
+  const label = ` 👋 ${waves} ${waves === 1 ? 'wave' : 'waves'}`
+
+  return (
+    <button
+      css={css`
+        background: rebeccapurple;
+        border: none;
+        color: white;
+        font-size: 1.25rem;
+      `}
+      onClick={() => setWaves(waves + 1)}
+    >
+      {label}
+    </button>
+  )
+}
+
+export default Wave
+```
+
+> <a id="code-03-04">_**Listing 3.04** `src/pages/contact.mdx`_</a>
+
+```mdx
+import Wave from '../components/wave'
+
+# Contact Me
+
+You can get in touch with me by opening the nearest window and yelling out of it real loud.
+
+## Or you can wave to me
+
+Just click this button to simulate a friendly wave.
+
+<Wave />
+
+Please note that I may not wave back. This is because I am very far way and probably didn't see you click this button.
+
+<div style={{background: 'red'}}>
+
+  ## This is important!
+  
+</div>
+```
 
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
@@ -565,3 +656,5 @@ const Layout = ({ children }) => {
 [emotion]: https://emotion.sh/docs/introduction
 [github-gatsby-plugin-react-helmet]: https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-helmet#readme
 [github-react-helmet]: https://github.com/nfl/react-helmet#readme
+[github-gatsby-plugin-mdx]: https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#readme
+[github-gatsby-source-filesystem]: https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme
