@@ -644,6 +644,61 @@ Please note that I may not wave back. This is because I am very far way and prob
 </div>
 ```
 
+## 3.2 - Building a Blog with MDX (11:25 - 15:39)
+
+```shell
+mkdir posts/00-hello-world
+touch posts/00-hello-world/hello-world.mdx
+```
+
+> <a id="code-03-05">_**Listing 3.05** `posts/00-hello-world/hello-world.mdx`_</a>
+
+```mdx
+---
+title: Hello World!
+slug: hello-world
+author: Peter Csontos
+---
+
+This is my first blog post. I wrote it with MDX!
+```
+
+> <a id="code-03-06">_**Listing 3.06** `posts/01-another-post/another-post.mdx`_</a>
+
+```mdx
+---
+title: Another Post
+slug: another-post
+author: Peter Csontos
+---
+
+This is my first blog post. I wrote it with MDX!
+```
+
+```shell
+npm i gatsby-source-filesystem
+```
+
+> <a id="code-03-07">_**Listing 3.07** `gatsby-config.js`_</a>
+
+```js
+module.exports = {
+//.-.-.-
+  plugins: [
+    // .-.-.-
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'posts',
+        path: 'posts',
+      },
+    },
+  ],
+}
+```
+
+
+
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
