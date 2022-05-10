@@ -697,9 +697,69 @@ module.exports = {
 }
 ```
 
+## 3.3 - Rendering a Post Listing (15:40 - 23:48)
 
+```shell
+touch hooks/use-posts.js
+```
 
+> <a id="code-03-08">_**Listing 3.08** `hooks/use-posts.js`_</a>
 
+```js
+import { graphql, useStaticQuery } from 'gatsby'
+
+const usePosts = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      allMdx {
+        nodes {
+          frontmatter {
+            title
+            slug
+            author
+          }
+          excerpt
+        }
+      }
+    }
+  `)
+
+  return data.allMdx.nodes.map((post) => ({
+    title: post.frontmatter.title,
+    author: post.frontmatter.author,
+    slug: post.frontmatter.slug,
+    excerpt: post.excerpt,
+  }))
+}
+
+export default usePosts
+
+```
+
+> <a id="code-03-09">_**Listing 3.09** `pages/index.js`_</a>
+ 
+```js
+// .-.-.-
+import usePosts from '../hooks/use-posts'
+
+const Index = () => {
+  const posts = usePosts()
+  return (
+    <Layout>
+      <h1>Home</h1>
+      <p>Hello Budapest!</p>
+      <Link to="/about/">Learn about Me &rarr;></Link>
+
+      <h2>Read my blog</h2>
+      {posts.map((post) => (
+        <pre>{JSON.stringify(post, null, 2)}</pre>
+      ))}
+    </Layout>
+  )
+}
+export default Index
+
+```
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
 [slides]: https://jlengstorf.github.io/presentations/workshop-gatsby-mdx-blog/#/
