@@ -758,8 +758,115 @@ const Index = () => {
   )
 }
 export default Index
-
 ```
+
+## 3.4 - Modifying Post Listing Disaply (23:50 - 29:39)
+
+```shell
+touch components/post-preview.js
+```
+
+> <a id="code-03-10">_**Listing 3.10** `components/post-preview.js`_</a>
+
+```js
+import React from 'react'
+import { Link } from 'gatsby'
+
+const PostPreview = ({ post }) => {
+   return (
+           <article>
+              <h3>
+                 <Link to={post.title}>{post.title}</Link>
+              </h3>
+              <p>{post.excerpt}</p>
+              <Link to={post.slug}>read this post &rarr;</Link>
+           </article>
+   )
+}
+
+export default PostPreview
+```
+
+> <a id="code-03-11">_**Listing 3.11** `components/post-preview.js`_</a>
+
+```js
+// .-.-.-
+import PostPreview from '../components/post-preview'
+
+const Index = () => {
+  // .-.-.-
+  return (
+    <Layout>
+      // .-.-.-
+      <h2>Read my blog</h2>
+      {posts.map((post) => (
+        <PostPreview key={post.slug} post={post} />
+      ))}
+    </Layout>
+  )
+}
+// .-.-.-
+```
+> <a id="code-03-12">_**Listing 3.12** `components/post-preview.js`_</a>
+
+```js
+// .-.-.-
+import {css} from '@emotion/react'
+
+const PostPreview = ({ post }) => {
+  return (
+    <article
+      css={css`
+        border-bottom: 1px solid #ddd;
+        margin-top: 0.75rem;
+        padding-bottom: 1rem;
+
+        :first-of-type {
+          margin-top: 1rem;
+        }
+      `}
+    >
+      // .-.-.-
+  )
+}
+// .-.-.-
+```
+
+```shell
+touch components/read-link.js
+```
+
+> <a id="code-03-13">_**Listing 3.13** `components/read-link.js`_</a>
+
+```js
+import { Link } from 'gatsby'
+import styled from '@emotion/styled'
+
+const ReadLink = styled(Link)`
+  display: inline-block;
+  font-size: 0.875rem;
+`
+
+export default ReadLink
+```
+
+> <a id="code-03-14">_**Listing 3.14** `components/post-preview.js`_</a>
+
+```js
+// .-.-.-
+import ReadLink from './read-link'
+
+const PostPreview = ({ post }) => {
+   return (
+           // .-.-.-
+              <p>{post.excerpt}</p>
+              <ReadLink to={post.slug}>read this post &rarr;</ReadLink>
+           // .-.-.-
+   )
+}
+// .-.-.-
+```
+
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
 [slides]: https://jlengstorf.github.io/presentations/workshop-gatsby-mdx-blog/#/
