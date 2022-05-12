@@ -760,7 +760,7 @@ const Index = () => {
 export default Index
 ```
 
-## 3.4 - Modifying Post Listing Disaply (23:50 - 29:39)
+## 3.4 - Modifying Post Listing Display (23:50 - 29:39)
 
 ```shell
 touch components/post-preview.js
@@ -866,6 +866,84 @@ const PostPreview = ({ post }) => {
 }
 // .-.-.-
 ```
+
+## 3.5 - Generating Post Pages (29:44 - 39:09)
+
+- <https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/>
+
+```shell
+touch gatsby-node.js
+```
+
+> <a id="code-03-15">_**Listing 3.15** `gatsby-node.js`_</a>
+
+```js
+exports.createPages = async ({ actions, graphql, reporter }) => {
+  const result = await graphql(`
+    query {
+      allMdx {
+        nodes {
+          frontmatter {
+            slug
+          }
+        }
+      }
+    }
+  `)
+
+  if (result.errors) {
+    reporter.panic('failed to sreate posts', result.errors)
+  }
+
+  const posts = result.data.allMdx.nodes
+
+  posts.forEach((post) => {
+    actions.createPage({
+      path: post.frontmatter.slug,
+      component: require.resolve('./src/templates/post.js'),
+      context: {
+        slug: `/${post.frontmatter.slug}`,
+      },
+    })
+  })
+}
+
+```
+
+```shell
+mkdir templates
+touch templates/post.js
+```
+
+> <a id="code-03-16">_**Listing 3.16** `templates/post.js`_</a>
+
+```js
+import React from 'react'
+import Layout from '../components/layout'
+import ReadLink from '../components/read-link'
+import { css } from '@emotion/react'
+
+const PostTemplate = () => {
+  return (
+    <Layout>
+      <h1>post title</h1>
+      <p
+        css={css`
+          font-site: 0.75rem;
+        `}
+      >
+        Posted by (author)
+      </p>
+      <p>Post body goes here</p>
+      <ReadLink to="/">&larr; back to all posts</ReadLink>
+    </Layout>
+  )
+}
+
+export default PostTemplate
+
+```
+
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
