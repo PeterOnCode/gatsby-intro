@@ -1008,6 +1008,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 }
 ```
 
+## 3.7 - Getting Post Q&A (47:54 - 50:42)
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
