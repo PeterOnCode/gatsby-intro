@@ -1121,7 +1121,63 @@ const Hero = () => {
 // .-.-.-
 ```
 
-### 5.2. - 
+### 5.2. - Optimizing Images with Sharp (12:13 - 19:06)
+
+- [gatsby-transformer-sharp](https://www.gatsbyjs.com/plugins/gatsby-transformer-sharp/)
+- [gatsby-plugin-sharp](https://www.gatsbyjs.com/plugins/gatsby-plugin-sharp)
+- [gatsby-background-image](https://www.gatsbyjs.com/plugins/gatsby-background-image/)
+
+```shell
+npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-background-image
+``
+
+> <a id="code-05-04">_**Listing 5.04** `gatsby-config.js`_</a>
+
+```jsx
+module.exports = {
+  // .-.-.-
+  plugins: [
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
+    // .-.--.
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: 'images',
+      },
+    },
+  ],
+}
+
+```
+
+```shell
+mkdir images
+```
+
+```graphql
+query {
+  allFile(filter: {sourceInstanceName: {eq: "images"}}) {
+    nodes {
+      relativePath
+      childrenImageSharp {
+        original {
+          height
+          src
+          width
+        }
+        fluid(traceSVG: {}) {
+          src
+          srcSet
+        }
+      }
+    }
+  }
+}
+```
+
+
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
