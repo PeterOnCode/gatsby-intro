@@ -549,7 +549,7 @@ const Layout = ({ children }) => {
 }
 // .-.-.-
 ```
-## 3. - MDX and 4. MDX Blog
+## Lesson 3 - MDX and Lesson 4 - MDX Blog
 ### 3.1 - Rendering Components in MDX (00:00 - 11:22)
 
 - [gatsby-source-filesystem][github-gatsby-source-filesystem]
@@ -737,7 +737,7 @@ export default usePosts
 ```
 
 > <a id="code-03-09">_**Listing 3.09** `pages/index.js`_</a>
- 
+
 ```js
 // .-.-.-
 import usePosts from '../hooks/use-posts'
@@ -1013,7 +1013,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 ...
 
 
-## 5. - Working with Images
+## Lesson 5 - Working with Images
 
 ### 5.1. - Adding a Hero Image Box (00:00 - 12:08)
 
@@ -1177,12 +1177,54 @@ query {
 }
 ```
 
+### 5.3. - Using Optimized Sharp Images (19:06 - 25:12)
+
+> <a id="code-05-05">_**Listing 5.05** `components/hero.js`_</a>
+
+```jsx
+// .-.-.-
+import BackgroundImage from 'gatsby-background-image'
+
+const ImageBackground = styled(BackgroundImage)`
+  background-position: top 50% center;
+  background-size: cover;
+  height: 50vh;
+`
+
+// .-.-.-
+
+const Hero = () => {
+   const { image } = useStaticQuery(graphql`
+    query {
+      image: file(relativePath: { eq: "budapest-unsplash.jpg" }) {
+        sharp: childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+    }
+  `)
+   return (
+           <ImageBackground Tag="section" fluid={image.sharp.fluid} fadeIn="soft">
+              <TextBox>
+                 <h1>Frontend Masters + Gatsby &hearts;</h1>
+                 <p>
+                    Hello Minnesota <Link to="/about/">Learn about me &rarr;</Link>
+                 </p>
+              </TextBox>
+           </ImageBackground>
+   )
+}
+
+// .-.-.-
+```
 
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
 [slides]: https://jlengstorf.github.io/presentations/workshop-gatsby-mdx-blog/#/
-[gatsbyjs.com-starter-library]: https://www.gatsbyjs.com/docs/how-to/local-development/starters/ ""
+[gatsbyjs.com-starter-library]: https://www.gatsbyjs.com/docs/how-to/local-development/starters/
 [gatsbyjs.com-config-api]:https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
 [github-gatsby-intro-branch-step0-pages-and-links]: https://github.com/FrontendMasters/gatsby-intro/tree/step0/pages-and-links
 [github-gatsby-plugin-emotion]: https://www.npmjs.com/package/gatsby-plugin-emotion
