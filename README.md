@@ -549,7 +549,7 @@ const Layout = ({ children }) => {
 }
 // .-.-.-
 ```
-
+## Lesson 3 - MDX and Lesson 4 - MDX Blog
 ### 3.1 - Rendering Components in MDX (00:00 - 11:22)
 
 - [gatsby-source-filesystem][github-gatsby-source-filesystem]
@@ -644,7 +644,7 @@ Please note that I may not wave back. This is because I am very far way and prob
 </div>
 ```
 
-## 3.2 - Building a Blog with MDX (11:25 - 15:39)
+### 3.2 - Building a Blog with MDX (11:25 - 15:39)
 
 ```shell
 mkdir posts/00-hello-world
@@ -697,7 +697,7 @@ module.exports = {
 }
 ```
 
-## 3.3 - Rendering a Post Listing (15:40 - 23:48)
+### 3.3 - Rendering a Post Listing (15:40 - 23:48)
 
 ```shell
 touch hooks/use-posts.js
@@ -737,7 +737,7 @@ export default usePosts
 ```
 
 > <a id="code-03-09">_**Listing 3.09** `pages/index.js`_</a>
- 
+
 ```js
 // .-.-.-
 import usePosts from '../hooks/use-posts'
@@ -760,7 +760,7 @@ const Index = () => {
 export default Index
 ```
 
-## 3.4 - Modifying Post Listing Display (23:50 - 29:39)
+### 3.4 - Modifying Post Listing Display (23:50 - 29:39)
 
 ```shell
 touch components/post-preview.js
@@ -867,7 +867,7 @@ const PostPreview = ({ post }) => {
 // .-.-.-
 ```
 
-## 3.5 - Generating Post Pages (29:44 - 39:09)
+### 3.5 - Generating Post Pages (29:44 - 39:09)
 
 - <https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/>
 
@@ -944,7 +944,7 @@ export default PostTemplate
 
 ```
 
-## 3.6 - Getting Post Data by Slug (39:11 - 47:48)
+### 3.6 - Getting Post Data by Slug (39:11 - 47:48)
 
 > <a id="code-03-17">_**Listing 3.17** `templates/post.js`_</a>
 
@@ -1010,10 +1010,221 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
 ## 3.7 - Getting Post Q&A (47:54 - 50:42)
 
+...
+
+
+## Lesson 5 - Working with Images
+
+### 5.1. - Adding a Hero Image Box (00:00 - 12:08)
+
+```shell
+touch components/hero.js
+```
+
+> <a id="code-05-01">_**Listing 5.01** `components/hero.js`_</a>
+
+```jsx
+import React from 'react'
+import { Link } from 'gatsby'
+
+const Hero = () => {
+  return (
+    <div>
+      <h1>Frontend Masters + Gatsby &hearts;</h1>
+      <p>
+        Hello Minnesota <Link to="/about/">Learn about me &rarr;</Link>
+      </p>
+    </div>
+  )
+}
+
+export default Hero
+```
+
+> <a id="code-05-02">_**Listing 5.02** `pages/index.js`_</a>
+
+```jsx
+// .-.-.-
+import Hero from '../components/hero'
+
+const Index = () => {
+   const posts = usePosts()
+   return (
+           <>
+              <Hero />
+              <Layout>
+                 <h2>Read my blog</h2>
+                 {posts.map((post) => (
+                         <PostPreview key={post.slug} post={post} />
+                 ))}
+              </Layout>
+           </>
+   )
+}
+// .-.-.-
+```
+
+```shell
+mkdir /static/images
+```
+
+> <a id="code-05-03">_**Listing 5.02** `components/hero.js`_</a>
+
+```jsx
+// .-.-.-
+import styled from '@emotion/styled'
+
+const ImageBackground = styled('div')`
+  background-image: url('/images/budapest-unsplash.jpg');
+  background-position: top 50% center;
+  background-size: cover;
+  height: 50vh;
+`
+
+const TextBox = styled('div')`
+  background-image: linear-gradient(to top, #ddbbffdd 2rem, #ddbbff00);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  padding: 0 calc((100vw - 550px) / 2) 2rem;
+  width: 100%;
+
+  h1 {
+    text-shadow: 1px 1px 3px #eeddff66;
+    font-size: 2.25rem;
+  }
+
+  p,
+  a {
+    color: #222;
+    margin-top: 0;
+  }
+
+  a {
+    margin-top: 0.5rem;
+  }
+`
+
+const Hero = () => {
+   return (
+           <ImageBackground>
+              <TextBox>
+                 <h1>Frontend Masters + Gatsby &hearts;</h1>
+                 <p>
+                    Hello Minnesota <Link to="/about/">Learn about me &rarr;</Link>
+                 </p>
+              </TextBox>
+           </ImageBackground>
+   )
+}
+// .-.-.-
+```
+
+### 5.2. - Optimizing Images with Sharp (12:13 - 19:06)
+
+- [gatsby-transformer-sharp](https://www.gatsbyjs.com/plugins/gatsby-transformer-sharp/)
+- [gatsby-plugin-sharp](https://www.gatsbyjs.com/plugins/gatsby-plugin-sharp)
+- [gatsby-background-image](https://www.gatsbyjs.com/plugins/gatsby-background-image/)
+
+```shell
+npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-background-image
+``
+
+> <a id="code-05-04">_**Listing 5.04** `gatsby-config.js`_</a>
+
+```jsx
+module.exports = {
+  // .-.-.-
+  plugins: [
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
+    // .-.--.
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: 'images',
+      },
+    },
+  ],
+}
+
+```
+
+```shell
+mkdir images
+```
+
+```graphql
+query {
+  allFile(filter: {sourceInstanceName: {eq: "images"}}) {
+    nodes {
+      relativePath
+      childrenImageSharp {
+        original {
+          height
+          src
+          width
+        }
+        fluid(traceSVG: {}) {
+          src
+          srcSet
+        }
+      }
+    }
+  }
+}
+```
+
+### 5.3. - Using Optimized Sharp Images (19:06 - 25:12)
+
+> <a id="code-05-05">_**Listing 5.05** `components/hero.js`_</a>
+
+```jsx
+// .-.-.-
+import BackgroundImage from 'gatsby-background-image'
+
+const ImageBackground = styled(BackgroundImage)`
+  background-position: top 50% center;
+  background-size: cover;
+  height: 50vh;
+`
+
+// .-.-.-
+
+const Hero = () => {
+   const { image } = useStaticQuery(graphql`
+    query {
+      image: file(relativePath: { eq: "budapest-unsplash.jpg" }) {
+        sharp: childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+    }
+  `)
+   return (
+           <ImageBackground Tag="section" fluid={image.sharp.fluid} fadeIn="soft">
+              <TextBox>
+                 <h1>Frontend Masters + Gatsby &hearts;</h1>
+                 <p>
+                    Hello Minnesota <Link to="/about/">Learn about me &rarr;</Link>
+                 </p>
+              </TextBox>
+           </ImageBackground>
+   )
+}
+
+// .-.-.-
+```
+
+
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
 [slides]: https://jlengstorf.github.io/presentations/workshop-gatsby-mdx-blog/#/
-[gatsbyjs.com-starter-library]: https://www.gatsbyjs.com/docs/how-to/local-development/starters/ ""
+[gatsbyjs.com-starter-library]: https://www.gatsbyjs.com/docs/how-to/local-development/starters/
 [gatsbyjs.com-config-api]:https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
 [github-gatsby-intro-branch-step0-pages-and-links]: https://github.com/FrontendMasters/gatsby-intro/tree/step0/pages-and-links
 [github-gatsby-plugin-emotion]: https://www.npmjs.com/package/gatsby-plugin-emotion

@@ -5,6 +5,8 @@ module.exports = {
       'A site we built together doing a full-day Frontend MAsters Gatsby workshop!',
   },
   plugins: [
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
     {
@@ -20,6 +22,13 @@ module.exports = {
       options: {
         name: 'posts',
         path: 'posts',
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: 'images',
       },
     },
   ],
