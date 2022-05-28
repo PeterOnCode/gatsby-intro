@@ -1274,7 +1274,7 @@ This is my next blog post. I'm on a roll!
 npm i gatsby-image
 ```
 
-> <a id="code-05-0">_**Listing 5.08** `src/components/post-preview.js`_</a>
+> <a id="code-05-08">_**Listing 5.08** `src/components/post-preview.js`_</a>
 
 ```js
 //.-.-.-
@@ -1317,6 +1317,101 @@ const PostPreview = ({ post }) => {
 
 ```
 
+### 5.5. - Styling Post Images (30:59 - 36:24)
+
+> <a id="code-05-09">_**Listing 5.09** `src/hooks/use-posts.js`_</a>
+
+```js
+// .-.-.-
+
+const usePosts = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      allMdx {
+        nodes {
+          frontmatter {
+            title
+            slug
+            author
+            image {
+              sharp: childImageSharp {
+                fluid(
+                  maxWidth: 100
+                  maxHeight: 100
+                  duotone: { highlight: "#ddbbff", shadow: "#663399" }
+                ) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
+          excerpt
+        }
+      }
+    }
+  `)
+
+  return data.allMdx.nodes.map((post) => ({
+    title: post.frontmatter.title,
+    author: post.frontmatter.author,
+    slug: post.frontmatter.slug,
+    image: post.frontmatter.image,
+    excerpt: post.excerpt,
+  }))
+}
+//.-.-.-
+```
+
+> <a id="code-05-10">_**Listing 5.10** `src/components/post-preview.js`_</a>
+
+```js
+// .-.-.-
+
+const PostPreview = ({ post }) => {
+  return (
+    <article
+      css={css`
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        margin-top: 0;
+        padding-bottom: 1rem;
+
+        :first-of-type {
+          margin-top: 1rem;
+        }
+      `}
+    >
+      <Link
+        to={post.slug}
+        css={css`
+          margin: 1rem 1rem 0 0;
+          width: 100px;
+        `}
+      >
+        <Image
+          fluid={post.image.sharp.fluid}
+          css={css`
+            * {
+              margin-top: 0;
+            }
+          `}
+          alt={post.title}
+        />
+      </Link>
+      <div>
+        <h3>
+          <Link to={post.slug}>{post.title}</Link>
+        </h3>
+        <p>{post.excerpt}</p>
+        <ReadLink to={post.slug}>read this post &rarr;</ReadLink>
+      </div>
+    </article>
+  )
+}
+
+// .-.-.-
+
+```
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
