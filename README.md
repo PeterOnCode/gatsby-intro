@@ -1129,7 +1129,7 @@ const Hero = () => {
 
 ```shell
 npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-background-image
-``
+```
 
 > <a id="code-05-04">_**Listing 5.04** `gatsby-config.js`_</a>
 
@@ -1218,6 +1218,103 @@ const Hero = () => {
 }
 
 // .-.-.-
+```
+
+### 5.4. - Adding Images to MDX Posts (25:15 - 30:55)
+
+> <a id="code-05-06">_**Listing 5.06** `posts/00-hello-world/hello-world.mdx`_</a>
+
+
+```text
+---
+title: Hello World!
+slug: hello-world
+author: Peter Csontos
+image: ./images/clay-banks--unsplash.jpg
+---
+
+This is my first blog post. I wrote it with MDX!
+```
+
+> <a id="code-05-07">_**Listing 5.07** `posts/01-another-post/another-post.mdx`_</a>
+
+```text
+---
+title: Another Post
+slug: another-post
+author: Peter Csontos
+image: ./images/vladislav-klapin--unsplash.jpg
+---
+
+This is my next blog post. I'm on a roll!
+```
+
+
+```graphql
+{
+  allMdx {
+    nodes {
+      frontmatter {
+        image {
+          name
+          childImageSharp {
+            fluid {
+              srcSet
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+
+```shell
+npm i gatsby-image
+```
+
+> <a id="code-05-0">_**Listing 5.08** `src/components/post-preview.js`_</a>
+
+```js
+//.-.-.-
+import Image from 'gatsby-image'
+
+const PostPreview = ({ post }) => {
+  return (
+    <article
+      css={css`
+        border-bottom: 1px solid #ddd;
+        margin-top: 0.75rem;
+        padding-bottom: 1rem;
+
+        :first-of-type {
+          margin-top: 1rem;
+        }
+      `}
+    >
+      <Link
+        to={post.slug}
+        css={css`
+          margin: 1rem 1rem 0 0;
+          width: 100%;
+        `}
+      >
+        <Image
+          css={css`
+            * {
+              margin-top: 0;
+            }
+          `}
+          alt={post.title}
+        />
+      </Link>
+      // .-.-.-
+    </article>
+  )
+}
+// .-.-.-
+
 ```
 
 
