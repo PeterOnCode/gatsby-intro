@@ -1410,8 +1410,55 @@ const PostPreview = ({ post }) => {
 }
 
 // .-.-.-
-
 ```
+
+### 5.6. - Adding Optimized Images to Posts (36:30 - 41:24)
+
+- [gatsby-remark-images](https://www.gatsbyjs.com/plugins/gatsby-remark-images/)
+
+
+```shell
+npm i gatsby-remark-images
+```
+
+> <a id="code-05-11">_**Listing 5.11** `gatsby-config.js`_</a>
+
+```js
+module.exports = {
+  // .-.-.-
+  plugins: [
+    // .-.-.-
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        defaultLayouts: {
+          default: require.resolve('./src/components/layout.js'),
+        },
+        gatsbyRemarkPlugins: [{ resolve: 'gatsby-remark-images' }],
+      },
+    }
+    // .-.-.-
+  ],
+}
+```
+
+> <a id="code-05-12">_**Listing 5.12** `posts/00-hello-world/hello-world.mdx`_</a>
+
+```text
+---
+title: Hello World!
+slug: hello-world
+author: Peter Csontos
+image: ./images/clay-banks--unsplash.jpg
+---
+
+![Sign that says hola.](./images/clay-banks--unsplash.jpg)
+
+This is my first blog post. I wrote it with MDX!
+```
+
+- <https://using-gatsby-image.gatsbyjs.org/>
+
 
 [gatsbyjs.com-quickstart]: https://www.gatsbyjs.com/docs/quick-start/ "Quick Start"
 [github-course-errata]: https://github.com/FrontendMasters/gatsby-intro#course-errata
